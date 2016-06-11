@@ -1,8 +1,8 @@
 #include "Dot.h"
 #include "LTexture.h"
 extern LTexture gDotTexture;
-extern const int LEVEL_WIDTH = 1280;
-extern const int LEVEL_HEIGHT = 960;
+extern const int LEVEL_WIDTH = 2042;
+extern const int LEVEL_HEIGHT = 1534;
 
 Dot::Dot()
 {

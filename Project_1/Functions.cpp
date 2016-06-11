@@ -78,7 +78,7 @@ bool loadMedia()
 	}
 
 	//Load background texture
-	if (!gBGTexture.loadFromFile("bg.png"))
+	if (!gBGTexture.loadFromFile("Map.png"))
 	{
 		printf("Failed to load background texture!\n");
 		success = false;

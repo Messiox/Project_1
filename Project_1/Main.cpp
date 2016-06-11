@@ -11,8 +11,8 @@ and may not be redistributed without written permission.*/
 #include "Functions.h"
 
 //The dimensions of the level
-const int LEVEL_WIDTH = 1280;
-const int LEVEL_HEIGHT = 960;
+const int LEVEL_WIDTH = 2042;
+const int LEVEL_HEIGHT = 1534;
 
 //Screen dimension constants
 const int SCREEN_WIDTH = 640;
