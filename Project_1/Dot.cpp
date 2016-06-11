@@ -23,10 +23,10 @@ void Dot::handleEvent(SDL_Event& e)
 		//Adjust the velocity
 		switch (e.key.keysym.sym)
 		{
-		case SDLK_UP: mVelY -= DOT_VEL; break;
-		case SDLK_DOWN: mVelY += DOT_VEL; break;
-		case SDLK_LEFT: mVelX -= DOT_VEL; break;
-		case SDLK_RIGHT: mVelX += DOT_VEL; break;
+		case SDLK_w: mVelY -= DOT_VEL; break;
+		case SDLK_s: mVelY += DOT_VEL; break;
+		case SDLK_a: mVelX -= DOT_VEL; break;
+		case SDLK_d: mVelX += DOT_VEL; break;
 		}
 	}
 	//If a key was released
@@ -35,10 +35,10 @@ void Dot::handleEvent(SDL_Event& e)
 		//Adjust the velocity
 		switch (e.key.keysym.sym)
 		{
-		case SDLK_UP: mVelY += DOT_VEL; break;
-		case SDLK_DOWN: mVelY -= DOT_VEL; break;
-		case SDLK_LEFT: mVelX += DOT_VEL; break;
-		case SDLK_RIGHT: mVelX -= DOT_VEL; break;
+		case SDLK_w: mVelY += DOT_VEL; break;
+		case SDLK_s: mVelY -= DOT_VEL; break;
+		case SDLK_a: mVelX += DOT_VEL; break;
+		case SDLK_d: mVelX -= DOT_VEL; break;
 		}
 	}
 }
