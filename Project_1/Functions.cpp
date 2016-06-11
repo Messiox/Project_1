@@ -1,16 +1,18 @@
 #include "Functions.h"
 #include "LTexture.h"
+#include "Zombie.h"
 
-extern const int SCREEN_WIDTH = 640;
-extern const int SCREEN_HEIGHT = 480;
+extern const int SCREEN_WIDTH = 1024;
+extern const int SCREEN_HEIGHT = 768;
 
 
 
 extern SDL_Renderer* gRenderer;
 extern SDL_Window* gWindow;
-extern LTexture gDotTexture;
-extern LTexture gBGTexture;
-
+extern LTexture gAvatarTexture;
+extern LTexture gMapTexture;
+extern LTexture gZombieTexture;
+extern list<Zombie*> zombie;
 bool init()
 {
 	//Initialization flag
@@ -31,7 +33,7 @@ bool init()
 		}
 
 		//Create window
-		gWindow = SDL_CreateWindow("SDL Tutorial", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
+		gWindow = SDL_CreateWindow("Project", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
 		if (gWindow == NULL)
 		{
 			printf("Window could not be created! SDL Error: %s\n", SDL_GetError());
@@ -71,16 +73,22 @@ bool loadMedia()
 	bool success = true;
 
 	//Load dot texture
-	if (!gDotTexture.loadFromFile("dot.bmp"))
+	if (!gAvatarTexture.loadFromFile("Avatar.png"))
 	{
-		printf("Failed to load dot texture!\n");
+		printf("Failed to load Av texture!\n");
+		success = false;
+	}
+
+	if (!gZombieTexture.loadFromFile("Zombie.png"))
+	{
+		printf("Failed to load zombie texture!\n");
 		success = false;
 	}
 
 	//Load background texture
-	if (!gBGTexture.loadFromFile("Map.png"))
+	if (!gMapTexture.loadFromFile("Map.png"))
 	{
-		printf("Failed to load background texture!\n");
+		printf("Failed to load Map texture!\n");
 		success = false;
 	}
 
@@ -90,8 +98,9 @@ bool loadMedia()
 void close()
 {
 	//Free loaded images
-	gDotTexture.free();
-	gBGTexture.free();
+	gAvatarTexture.free();
+	gMapTexture.free();
+	gZombieTexture.free();
 
 	//Destroy window	
 	SDL_DestroyRenderer(gRenderer);

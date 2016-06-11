@@ -7,16 +7,15 @@ and may not be redistributed without written permission.*/
 #include <stdio.h>
 #include <string>
 #include "LTexture.h"
-#include "Dot.h"
+#include "Avatar.h"
 #include "Functions.h"
+#include "Zombie.h"
+#include <list>
 
 //The dimensions of the level
-const int LEVEL_WIDTH = 2042;
-const int LEVEL_HEIGHT = 1534;
+const int LEVEL_WIDTH = 1024;
+const int LEVEL_HEIGHT = 768;
 
-//Screen dimension constants
-const int SCREEN_WIDTH = 640;
-const int SCREEN_HEIGHT = 480;
 
 
 //The window we'll be rendering to
@@ -26,8 +25,9 @@ SDL_Window* gWindow = NULL;
 SDL_Renderer* gRenderer = NULL;
 
 //Scene textures
-LTexture gDotTexture;
-LTexture gBGTexture;
+LTexture gAvatarTexture;
+LTexture gZombieTexture;
+LTexture gMapTexture;
 
 
 
@@ -57,10 +57,11 @@ int main(int argc, char* args[])
 			SDL_Event e;
 
 			//The dot that will be moving around on the screen
-			Dot dot;
+			Avatar avatar;
+			std::list<Zombie*> zombies;
+			Zombie zombie;
+			int mouseX, mouseY;
 
-			//The camera area
-			SDL_Rect camera = { 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT };
 
 			//While application is running
 			while (!quit)
@@ -75,43 +76,27 @@ int main(int argc, char* args[])
 					}
 
 					//Handle input for the dot
-					dot.handleEvent(e);
+					avatar.handleEvent(e);
 				}
 
 				//Move the dot
-				dot.move();
+				avatar.move();
+				zombie.move(avatar.getPosX(),avatar.getPosY());
 
-				//Center the camera over the dot
-				camera.x = (dot.getPosX() + Dot::DOT_WIDTH / 2) - SCREEN_WIDTH / 2;
-				camera.y = (dot.getPosY() + Dot::DOT_HEIGHT / 2) - SCREEN_HEIGHT / 2;
-
-				//Keep the camera in bounds
-				if (camera.x < 0)
-				{
-					camera.x = 0;
-				}
-				if (camera.y < 0)
-				{
-					camera.y = 0;
-				}
-				if (camera.x > LEVEL_WIDTH - camera.w)
-				{
-					camera.x = LEVEL_WIDTH - camera.w;
-				}
-				if (camera.y > LEVEL_HEIGHT - camera.h)
-				{
-					camera.y = LEVEL_HEIGHT - camera.h;
-				}
+				SDL_GetMouseState(&mouseX, &mouseY);
+				avatar.calculateAngle(mouseX, mouseY);
 
 				//Clear screen
 				SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
 				SDL_RenderClear(gRenderer);
 
 				//Render background
-				gBGTexture.render(0, 0, &camera);
+				gMapTexture.render(0, 0);
 
 				//Render objects
-				dot.render(camera.x, camera.y);
+				avatar.render();
+				
+				zombie.render();
 
 				//Update screen
 				SDL_RenderPresent(gRenderer);
